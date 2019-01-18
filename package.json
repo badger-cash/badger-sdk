@@ -4,16 +4,58 @@
   "description": "Badger SDK",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "node ./node_modules/gulp/bin/gulp.js build && ./node_modules/typescript/bin/tsc",
+    "test": "nyc --reporter=text mocha --require babel-core/register --timeout 10000 test/",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "coverage:report": "nyc --reporter=html mocha --require babel-core/register --timeout 10000"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Bitcoin-com/badger-sdk.git"
+  },
+  "bin": {
+    "badger": "./index.js"
   },
   "author": "Gabriel Cardona <gabriel@bitcoin.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Bitcoin-com/badger-sdk/issues"
   },
-  "homepage": "https://github.com/Bitcoin-com/badger-sdk#readme"
+  "homepage": "https://github.com/Bitcoin-com/badger-sdk#readme",
+  "dependencies": {
+    "babel-register": "^6.26.0",
+    "bigi": "^1.4.2",
+    "bignumber.js": "^7.2.1",
+    "bitbox-sdk": "^2.3.0",
+    "buffer": "^5.1.0",
+    "chalk": "^2.3.0",
+    "clear": "0.1.0",
+    "commander": "^2.13.0",
+    "ecurve": "^1.0.6",
+    "figlet": "^1.2.1",
+    "git-clone": "^0.1.0",
+    "mkdirp": "^0.5.1",
+    "node-emoji": "^1.8.1",
+    "repl.history": "^0.1.4",
+    "slpjs": "^0.2.2",
+    "touch": "^3.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^10.11.7",
+    "chai": "^4.1.2",
+    "coveralls": "^3.0.2",
+    "eslint": "^5.5.0",
+    "eslint-config-prettier": "^3.0.1",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-prettier": "^3.0.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "fs-extra": "^7.0.0",
+    "gulp": "^3.9.1",
+    "mocha": "^5.2.0",
+    "node-mocks-http": "^1.7.2",
+    "nyc": "^13.0.1",
+    "prettier": "^1.14.3",
+    "typescript": "^3.1.4"
+  }
 }

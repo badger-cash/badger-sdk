@@ -1,0 +1,7 @@
+node_modules/
+.nyc_output/*
+.env
+start-local-server
+test-local-server
+coverage
+.DS_STORE
