@@ -16,24 +16,34 @@ class Button extends BITBOXSDK {
     if (config && config.id && config.id !== "") {
       this.id = config.id
       let badgerButton = document.getElementById(this.id)
-      console.log("bb", badgerButton)
       badgerButton.addEventListener("click", function(event) {
         if (typeof web4bch !== "undefined") {
           web4bch = new Web4Bch(web4bch.currentProvider)
-
           var txParams = {
-            to: this.getAttribute("data-to"),
+            to: config["data-to"]
+              ? config["data-to"]
+              : this.getAttribute("data-to"),
             from: web4bch.bch.defaultAccount,
-            value: this.getAttribute("data-satoshis")
+            value: config["data-satoshis"]
+              ? config["data-satoshis"]
+              : this.getAttribute("data-satoshis"),
+            opreturn: undefined
           }
+
+          if (config["data-opreturn"]) {
+            txParams.opreturn = config["data-opreturn"]
+          } else if (this.getAttribute("data-opreturn")) {
+            txParams.opreturn = this.getAttribute("data-opreturn")
+          }
+
           web4bch.bch.sendTransaction(txParams, (err: any, res: any) => {
             if (err) return
-            //
-            // var paywallId = this.getAttribute("data-paywall-id")
-            // if (paywallId) {
-            //   var paywall = document.getElementById("paywall")
-            //   paywall.style.display = "block"
-            // }
+
+            var paywallId = this.getAttribute("data-paywall-id")
+            if (paywallId) {
+              var paywall = document.getElementById("paywall")
+              paywall.style.display = "block"
+            }
 
             var successCallback = this.getAttribute("data-success-callback")
             if (successCallback) {
