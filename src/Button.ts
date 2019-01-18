@@ -1,7 +1,6 @@
 const BITBOXSDK = require("bitbox-sdk/lib/bitbox-sdk").default
 import { IConfig } from "./interfaces/IConfig"
 class Button extends BITBOXSDK {
-  id: string
   restURL: string
   constructor(config: IConfig) {
     super(config)
@@ -14,24 +13,21 @@ class Button extends BITBOXSDK {
     }
 
     if (config && config.id && config.id !== "") {
-      this.id = config.id
-      let badgerButton = document.getElementById(this.id)
+      let badgerButton = document.getElementById(config.id)
       badgerButton.addEventListener("click", function(event) {
         if (typeof web4bch !== "undefined") {
           web4bch = new Web4Bch(web4bch.currentProvider)
           var txParams = {
-            to: config["data-to"]
-              ? config["data-to"]
-              : this.getAttribute("data-to"),
+            to: config.to ? config.to : this.getAttribute("data-to"),
             from: web4bch.bch.defaultAccount,
-            value: config["data-satoshis"]
-              ? config["data-satoshis"]
+            value: config.satoshis
+              ? config.satoshis
               : this.getAttribute("data-satoshis"),
             opreturn: undefined
           }
 
-          if (config["data-opreturn"]) {
-            txParams.opreturn = config["data-opreturn"]
+          if (config.opreturn) {
+            txParams.opreturn = config.opreturn
           } else if (this.getAttribute("data-opreturn")) {
             txParams.opreturn = this.getAttribute("data-opreturn")
           }
@@ -39,13 +35,23 @@ class Button extends BITBOXSDK {
           web4bch.bch.sendTransaction(txParams, (err: any, res: any) => {
             if (err) return
 
-            var paywallId = this.getAttribute("data-paywall-id")
+            var paywallId
+            if (config.paywallId) {
+              paywallId = config.paywallId
+            } else if (this.getAttribute("data-paywall-id")) {
+              paywallId = this.getAttribute("data-paywall-id")
+            }
             if (paywallId) {
               var paywall = document.getElementById("paywall")
               paywall.style.display = "block"
             }
 
-            var successCallback = this.getAttribute("data-success-callback")
+            var successCallback
+            if (config.callback) {
+              successCallback = config.callback
+            } else if (this.getAttribute("data-callback")) {
+              successCallback = this.getAttribute("data-callback")
+            }
             if (successCallback) {
               window[successCallback](res)
             }
