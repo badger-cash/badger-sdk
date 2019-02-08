@@ -1,6 +1,6 @@
 {
   "name": "badger-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Badger SDK",
   "main": "index.js",
   "scripts": {
@@ -18,6 +18,9 @@
   },
   "author": "Gabriel Cardona <gabriel@bitcoin.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=10.15.1"
+  },
   "bugs": {
     "url": "https://github.com/Bitcoin-com/badger-sdk/issues"
   },
@@ -26,7 +29,7 @@
     "babel-register": "^6.26.0",
     "bigi": "^1.4.2",
     "bignumber.js": "^7.2.1",
-    "bitbox-sdk": "^2.3.0",
+    "bitbox-sdk": "^3.0.11",
     "buffer": "^5.1.0",
     "chalk": "^2.3.0",
     "clear": "0.1.0",
@@ -38,7 +41,8 @@
     "node-emoji": "^1.8.1",
     "repl.history": "^0.1.4",
     "slpjs": "^0.2.2",
-    "touch": "^3.1.0"
+    "touch": "^3.1.0",
+    "web4bch": "0.1.0"
   },
   "devDependencies": {
     "@types/node": "^10.11.7",
